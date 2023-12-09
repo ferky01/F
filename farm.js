@@ -1,65 +1,41 @@
-// Регистрируем корневую папку меню
-Menu.RegisterRootFolder("Farm Script");
-
-// Папка в меню
-const settings = Menu.AddFolder("Farm Script", "Settings"); 
-
-// Массив точек для фарма
-const farmSpots = [
-  new Vector(-1500, 1500),
-  new Vector(-2000, -2000) 
-];
-
-// Добавляем тогл в настройки   
-const enabled = settings.AddToggle("Enabled", false);
-
-// Инициализация скрипта
-function OnScriptLoad() {
-
-  // Вешаем обработчик на переключение тоглла
-  enabled.OnChange(() => {   
-    // перезаписываем переменную 
-    enabled.value = !enabled.value;
-  });
-
-}
-
-
-// Обработка нажатия клавиши F
-GameEvents.Subscribe("keyevent", (key) => {
-
-  // Если скрипт выключен - выходим
-  if (!enabled.value) 
-    return; 
-    
-  // Если нажата F  
-  if (key === EKeyCode.F) {
-
-    // Отправляем всех выделенных юнитов
-    Players.GetLocal().GetSelectedUnits().ForEach(unit => {
-     SendUnitToFarm(unit) 
-    });
-
-  }
-   
-});
-
-// Отправка юнита фармить 
-function SendUnitToFarm(unit) {
-
-  // Выбираем случайную точку
-  const spot = farmSpots[Math.RandomInt(0, farmSpots.length)];
-
-  // Приказ юниту двигаться в эту точку  
-  unit.Order({  
-    OrderType: dotaunitorder_t.DOTA_UNIT_ORDER_MOVE_TO_POSITION,
-    Position: spot
-  });
-
-}
-
-
-// Регистрируем скрипт
-RegisterScript({
-  OnScriptLoad    
-}, "Farm Script");
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
